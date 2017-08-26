@@ -1,21 +1,21 @@
-# About
+# About #
 This repo is basically my template for new bash repos/projects
 
-# CI Template:
+# CI Template #
 
 By default this template will assume that the Travis CI Service is used for CI/CD
 
-# Status
+# Status #
 
-### master:
+### master ###
 [![status](https://travis-ci.org/reactive-firewall/bash-repo.svg?branch=master)](https://travis-ci.org/reactive-firewall/bash-repo)
 [![code coverage](https://codecov.io/gh/reactive-firewall/bash-repo/branch/master/graph/badge.svg)](https://codecov.io/gh/reactive-firewall/bash-repo/branch/master/)
 
-### Stable:
+### Stable ###
 [![status](https://travis-ci.org/reactive-firewall/bash-repo.svg?branch=stable)](https://travis-ci.org/reactive-firewall/bash-repo)
 [![code coverage](https://codecov.io/gh/reactive-firewall/bash-repo/branch/stable/graph/badge.svg)](https://codecov.io/gh/reactive-firewall/bash-repo/branch/stable/)
 
-# How do I use this to create a new project repo?
+# How do I use this to create a new project repo? #
 
 (assuming new project is already forked on github to `MY-NEW-REPO`)
 
@@ -25,7 +25,7 @@ git clone https://github.com/reactive-firewall/MY-NEW-REPO.git MY-NEW-REPO
 # cd ./MY-NEW-REPO
 ```
 
-# Dev Testing Template:
+# Dev Testing Template #
 
 In a rush? Then use this:
 
@@ -35,28 +35,28 @@ make test ; # runs the tests
 make clean ; # cleans up for next test
 ```
 
-# Example Usage Template:
+# Example Usage Template #
 
 Want to use the Example `speed_test.bash` script then try this:
 
-### Running...
+### Running... ###
 
 ```bash
 speed_test.bash
 ```
 
-### ...Outputs
+### ...Outputs ###
 
 ```plain
 Local:  4620K
 Server: 1472K
 ```
 
-# Example installing Template:
+# Example installing Template #
 
 The following describes how to install the example script:
 
-### Download...
+### Download... ###
 
 ```bash
 cd /tmp
@@ -65,7 +65,7 @@ cd ./bash-repo
 make clean
 ```
 
-### ...install
+### ...install ###
 
 (might need sudo)
 
@@ -73,7 +73,7 @@ make clean
 make install
 ```
 
-### ...uninstall
+### ...uninstall ###
 
 uninstall is similar
 
