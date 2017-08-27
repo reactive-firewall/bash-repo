@@ -61,7 +61,7 @@
 ################################################################################
 
 # usage: 'speed_test.bash [server [test interface]]'
-# server defaults to 8.8.8.8 (GOOGLE's PUBLIC DNS - BUT YOU SHOULD CHANGE THIS TO SOMTHING THAT MAKES MORE SENSE)
+# server defaults to 8.8.8.8 (GOOGLE's PUBLIC DNS - BUT YOU SHOULD CHANGE THIS TO SOMETHING THAT MAKES MORE SENSE)
 
 if [[ ( `uname -s` = "Darwin" ) ]] ; then
 WAN_IFACE=${2:-en0}
@@ -71,7 +71,7 @@ WAN_IFACE=${2:-wlan0}
 fi
 
 SERVER_IP=${1:-8.8.8.8}
-# server defaults to 8.8.8.8 (GOOGLE's PUBLIC DNS - BUT YOU SHOULD CHANGE THIS TO SOMTHING THAT MAKES MORE SENSE)
+# server defaults to 8.8.8.8 (GOOGLE's PUBLIC DNS - BUT YOU SHOULD CHANGE THIS TO SOMETHING THAT MAKES MORE SENSE)
 if [[ ( `uname -s` = "Darwin" ) ]] ; then
 DATA_SIZE=$(( $(networksetup -getMTU ${WAN_IFACE:-"en0"} | grep -aoE "MTU:\s[0-9]+\s*" | cut -d \  -f 2 )-78))
 else
