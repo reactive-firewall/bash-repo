@@ -2,4 +2,4 @@ linters:
     shellcheck:
         shell: bash
 files:
-    ignore: ['*~', '.git', 'tests/*']
+    ignore: ['*~', '.git']

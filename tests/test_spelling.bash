@@ -60,38 +60,20 @@
 #    even if the above stated remedy fails of its essential purpose.
 ################################################################################
 
-EXIT_CODE=0
+# exit fast if command is missing
+test -x /usr/bin/spellintian || exit 0 ;
 
-# if locking was needed:
-####
-ulimit -t 600
-PATH="/bin:/sbin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin"
-umask 137
-
-LOCK_FILE="/tmp/net_speed_script_lock"
-
-if [[ -f ${LOCK_FILE} ]] ; then
-	exit 0 ;
+THE_TEMP_FILE="/tmp/swapfile_spellcheck_${RANDOM}.tmp.txt" ;
+( (spellintian "${@:-./**/*}" 2>/dev/null | fgrep -v "(duplicate word)" | fgrep " -> ") & (spellintian "${@:-./*}" 2>/dev/null | fgrep -v "(duplicate word)" | fgrep " -> ") & (spellintian "${@:-./**/**/*}"  2>/dev/null | fgrep -v "(duplicate word)" | fgrep " -> ") ) | sort -h | uniq | tee -a ${THE_TEMP_FILE:-/dev/null} ;
+wait ;
+THECOUNT=$( (wc -l ${THE_TEMP_FILE} 2>/dev/null || echo 0) | cut -d\  -f 1 ) ;
+EXIT_CODE=${THECOUNT} ;
+if [[ ("${THECOUNT}" -le 1) ]] ; then
+	EXIT_CODE=0 ;
+	echo "OK: Found no detected spelling errors." ;
+else
+	echo "FAIL: Found ${THECOUNT:-many} spelling errors." ;
 fi
-
-trap 'rm -f ${LOCK_FILE} 2>/dev/null || true ; wait ; exit 1 ;' SIGABRT
-trap 'rm -f ${LOCK_FILE} 2>/dev/null || true ; wait ; exit 1 ;' SIGHUP
-trap 'rm -f ${LOCK_FILE} 2>/dev/null || true ; wait ; exit 1 ;' SIGTERM
-trap 'rm -f ${LOCK_FILE} 2>/dev/null || true ; wait ; exit 1 ;' SIGQUIT
-trap 'rm -f ${LOCK_FILE} 2>/dev/null || true ; wait ; exit 1 ;' SIGINT
-trap 'rm -f ${LOCK_FILE} 2>/dev/null || true ; wait ; exit 0 ;' EXIT
-
-touch ${LOCK_FILE} 2>/dev/null || exit 0 ;
-EXIT_CODE=0
-
-# THIS IS THE ACTUAL TEST
-if [[ -f ../bin/speed_test.bash ]] ; then
-	../bin/speed_test.bash || EXIT_CODE=1
-elif [[ -f ./bin/speed_test.bash ]] ; then
-	./bin/speed_test.bash || EXIT_CODE=1
-fi
-
-rm -f ${LOCK_FILE} 2>/dev/null > /dev/null || true ; wait ;
-
-# goodbye
-exit ${EXIT_CODE:-255} ;
+rm -f ${THE_TEMP_FILE} 2>/dev/null >> /dev/null || true ;
+wait ;
+exit ${EXIT_CODE:255} ;

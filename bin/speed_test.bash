@@ -63,7 +63,7 @@
 # usage: 'speed_test.bash [server [test interface]]'
 # server defaults to 8.8.8.8 (GOOGLE's PUBLIC DNS - BUT YOU SHOULD CHANGE THIS TO SOMETHING THAT MAKES MORE SENSE)
 
-if [[ ( `uname -s` = "Darwin" ) ]] ; then
+if [[ ( $(uname -s) = "Darwin" ) ]] ; then
 WAN_IFACE=${2:-en0}
 # use en1 if you have both ethernet port and wifi and want to test wifi
 else
@@ -75,10 +75,10 @@ test -x /sbin/route 2>/dev/null || USE_ALT_ROUTE_CMD=1 ;
 
 SERVER_IP=${1:-8.8.8.8}
 # server defaults to 8.8.8.8 (GOOGLE's PUBLIC DNS - BUT YOU SHOULD CHANGE THIS TO SOMETHING THAT MAKES MORE SENSE)
-if [[ ( `uname -s` = "Darwin" ) ]] ; then
-DATA_SIZE=$(( $(networksetup -getMTU ${WAN_IFACE:-"en0"} | grep -aoE "MTU:\s[0-9]+\s*" | cut -d \  -f 2 )-78))
+if [[ ( $(uname -s) = "Darwin" ) ]] ; then
+DATA_SIZE=$(( $(networksetup -getMTU "${WAN_IFACE:-en0}" | grep -aoE "MTU:\s[0-9]+\s*" | cut -d \  -f 2 )-78))
 else
-DATA_SIZE=$(( $(ip link show | fgrep -m1 ${WAN_IFACE:-"mtu"} | grep -aoE "mtu\s[0-9]+\s*" | cut -d \  -f 2 )-78))
+DATA_SIZE=$(( $(ip link show | fgrep -m1 "${WAN_IFACE:-mtu}" | grep -aoE "mtu\s[0-9]+\s*" | cut -d \  -f 2 )-78))
 fi
 if [[ ( $USE_ALT_ROUTE_CMD -gt 0 ) ]] ; then
 LOCAL_GW_IP=$(netstat -r -n | fgrep G | tr -s ' ' | cut -d \  -f 2 | grep -oE "([12]?[0-9]?[0-9]{1}[\.]{1}){3}([12]?[0-9]?[0-9]{1}){1}" 2>/dev/null | head -n 1 )
@@ -86,7 +86,7 @@ else
 LOCAL_GW_IP=$(route -n | fgrep G | tr -s ' ' | cut -d \  -f 2 | grep -oE "([12]?[0-9]?[0-9]{1}[\.]{1}){3}([12]?[0-9]?[0-9]{1}){1}" 2>/dev/null | head -n 1 )
 fi
 
-TEST_PING_SAMPLES=${TEST_PING_SAMPLES:-20}
+TEST_PING_SAMPLES="${TEST_PING_SAMPLES:-20}"
 
 EXIT_CODE=0
 
@@ -102,7 +102,7 @@ EXIT_CODE=0
 # 	exit 0 ;
 # fi
 # 
-# trap 'rm -f ${LOCK_FILE} 2>/dev/null || true ; wait ; exit 1 ;' SIGKILL
+# trap 'rm -f ${LOCK_FILE} 2>/dev/null || true ; wait ; exit 1 ;' SIGABRT
 # trap 'rm -f ${LOCK_FILE} 2>/dev/null || true ; wait ; exit 1 ;' SIGHUP
 # trap 'rm -f ${LOCK_FILE} 2>/dev/null || true ; wait ; exit 1 ;' SIGTERM
 # trap 'rm -f ${LOCK_FILE} 2>/dev/null || true ; wait ; exit 1 ;' SIGQUIT
@@ -112,9 +112,11 @@ EXIT_CODE=0
 # touch ${LOCK_FILE} 2>/dev/null || exit 0 ;
 
 # THIS IS THE ACTUAL TEST to the next hop
-avg_speed=$(ping -qnc ${TEST_PING_SAMPLES:-20} -s ${DATA_SIZE:-1024} ${LOCAL_GW_IP} 2>/dev/null | tail -n 1 | cut -d \= -f 2 | cut -d \/ -f 2 | cut -d \. -f 1 )
+# shellcheck disable=SC1001
+avg_speed=$(ping -qnc "${TEST_PING_SAMPLES:-20}" -s ${DATA_SIZE:-1024} "${LOCAL_GW_IP}" 2>/dev/null | tail -n 1 | cut -d \= -f 2 | cut -d \/ -f 2 | cut -d \. -f 1 )
 # THIS IS THE ACTUAL TEST to the server
-avg_speed_2=$(ping -qc ${TEST_PING_SAMPLES:-20} -s ${DATA_SIZE:-1024} ${SERVER_IP} 2>/dev/null | tail -n 1 | cut -d \= -f 2 | cut -d \/ -f 2 | cut -d \. -f 1 )
+# shellcheck disable=SC1001
+avg_speed_2=$(ping -qc "${TEST_PING_SAMPLES:-20}" -s ${DATA_SIZE:-1024} "${SERVER_IP}" 2>/dev/null | tail -n 1 | cut -d \= -f 2 | cut -d \/ -f 2 | cut -d \. -f 1 )
 
 # report the data:
 ####
