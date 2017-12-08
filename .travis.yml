@@ -17,6 +17,7 @@ addons:
 matrix:
   include:
   - os: linux
+    sudo: true
     addons:
       apt:
         packages:
@@ -24,6 +25,10 @@ matrix:
           - libelf-dev
           - libdw-dev
           - cmake
+    language: generic
+    dist: trusty
+  - os: linux
+    sudo:false
     language: generic
     dist: trusty
   - os: linux
@@ -44,6 +49,9 @@ matrix:
   - os: osx
     osx_image: xcode8.3
     language: generic
+  allowed failure:
+    - os: linux
+      sudo: true
 
 install:
   - make clean || true
@@ -54,18 +62,6 @@ script:
   - make test
 
 after_success:
-  - if [[ $TRAVIS_OS_NAME == linux ]]; then curl --url="https://github.com/SimonKagstrom/kcov/archive/master.tar.gz" -o ./master.tar.gz 2>/dev/null 3>/dev/null &&\
-  tar xzf master.tar.gz &&\
-  cd kcov-master &&\
-  mkdir build &&\
-  cd build &&\
-  cmake .. &&\
-  make &&\
-  sudo make install &&\
-  cd ../.. &&\
-  rm -rf kcov-master &&\
-  mkdir -p coverage &&\
-  kcov ./coverage make test &&\
-  bash <(curl -s "https://codecov.io/bash") -s ./coverage ; fi
+  - ./tests/travis_prep_kcov.sh || true
   - echo "Done."
 
