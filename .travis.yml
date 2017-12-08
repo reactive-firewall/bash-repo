@@ -28,7 +28,7 @@ matrix:
     language: generic
     dist: trusty
   - os: linux
-    sudo:false
+    sudo: false
     language: generic
     dist: trusty
   - os: linux
