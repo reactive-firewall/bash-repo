@@ -1,10 +1,6 @@
 language: generic
 sudo: false
 
-dist:
-
-env:
-
 branches:
   only:
     - stable
@@ -50,7 +46,7 @@ matrix:
   - os: osx
     osx_image: xcode8.3
     language: generic
- allowed failures:
+  allowed failures:
   - os: linux
     sudo: true
   - os: osx
@@ -67,13 +63,9 @@ install:
   - make clean || true
   - make install 2>/dev/null || true
 
-before_script:
-  - make clean || true
-
 script:
+  - make clean || true
   - bashcov -- make test || make test
-
-after_script:
   - ls -lap || true
 
 after_success:
