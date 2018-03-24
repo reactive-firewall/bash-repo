@@ -65,8 +65,9 @@ install:
 
 script:
   - make clean || true
+  - which -a make
   - bashcov -- make test || make test
-  - ls -lap || true
+  - ls -lap coverage || true
 
 after_success:
   - ./tests/travis_prep_kcov.sh || true
