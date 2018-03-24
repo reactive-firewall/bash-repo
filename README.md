@@ -81,7 +81,7 @@ uninstall is similar
 make uninstall
 ```
 
-# [![License - MIT](https://img.shields.io/github/license/reactive-firewall/bash-repo.svg?maxAge=2592000)](https://github.com/reactive-firewall/bash-repo/LICENSE.md)]
+# [![License - MIT](https://img.shields.io/github/license/reactive-firewall/bash-repo.svg?maxAge=2592000)](https://github.com/reactive-firewall/bash-repo/LICENSE.md)
 
 ## Copyright (c) 2017 Mr. Walls
 ### 
