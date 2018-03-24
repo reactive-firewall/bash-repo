@@ -1,6 +1,10 @@
 language: generic
 sudo: false
 
+dist:
+
+env:
+
 branches:
   only:
     - stable
@@ -31,9 +35,6 @@ matrix:
     sudo: false
     language: generic
     dist: trusty
-  - os: linux
-    language: generic
-    dist: precice
   - os: osx
     osx_image: xcode6.4
     language: generic
@@ -49,17 +50,31 @@ matrix:
   - os: osx
     osx_image: xcode8.3
     language: generic
-  allowed failure:
+  allowed failures:
     - os: linux
       sudo: true
+    - os: osx
+      osx_image: xcode6.4
+      language: generic
+   - os: linux
+      language: generic
+      dist: precice
+
+before_install:
+  - travis_retry gem install bashcov || true
 
 install:
   - make clean || true
   - make install 2>/dev/null || true
 
-script:
+before_script:
   - make clean || true
-  - make test
+
+script:
+  - bashcov -- make test || make test
+
+after_script:
+  - ls -lap || true
 
 after_success:
   - ./tests/travis_prep_kcov.sh || true
