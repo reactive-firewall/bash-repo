@@ -78,12 +78,12 @@ SERVER_IP=${1:-8.8.8.8}
 if [[ ( $(uname -s) = "Darwin" ) ]] ; then
 DATA_SIZE=$(( $(networksetup -getMTU "${WAN_IFACE:-en0}" | grep -aoE "MTU:\s[0-9]+\s*" | cut -d \  -f 2 )-78))
 else
-DATA_SIZE=$(( $(ip link show | fgrep -m1 "${WAN_IFACE:-mtu}" | grep -aoE "mtu\s[0-9]+\s*" | cut -d \  -f 2 )-78))
+DATA_SIZE=$(( $(ip link show | grep -F -m1 "${WAN_IFACE:-mtu}" | grep -aoE "mtu\s[0-9]+\s*" | cut -d \  -f 2 )-78))
 fi
 if [[ ( $USE_ALT_ROUTE_CMD -gt 0 ) ]] ; then
-LOCAL_GW_IP=$(netstat -r -n | fgrep G | tr -s ' ' | cut -d \  -f 2 | grep -oE "([12]?[0-9]?[0-9]{1}[\.]{1}){3}([12]?[0-9]?[0-9]{1}){1}" 2>/dev/null | head -n 1 )
+LOCAL_GW_IP=$(netstat -r -n | grep -F G | tr -s ' ' | cut -d \  -f 2 | grep -oE "([12]?[0-9]?[0-9]{1}[\.]{1}){3}([12]?[0-9]?[0-9]{1}){1}" 2>/dev/null | head -n 1 )
 else
-LOCAL_GW_IP=$(route -n | fgrep G | tr -s ' ' | cut -d \  -f 2 | grep -oE "([12]?[0-9]?[0-9]{1}[\.]{1}){3}([12]?[0-9]?[0-9]{1}){1}" 2>/dev/null | head -n 1 )
+LOCAL_GW_IP=$(route -n | grep -F G | tr -s ' ' | cut -d \  -f 2 | grep -oE "([12]?[0-9]?[0-9]{1}[\.]{1}){3}([12]?[0-9]?[0-9]{1}){1}" 2>/dev/null | head -n 1 )
 fi
 
 TEST_PING_SAMPLES="${TEST_PING_SAMPLES:-20}"
