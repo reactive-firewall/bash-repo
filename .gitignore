@@ -12,3 +12,5 @@ lib/
 lib64/
 .cache
 *.log
+
+.DS_Store
