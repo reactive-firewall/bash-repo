@@ -1,6 +1,6 @@
 #! /bin/bash
 if [[ $TRAVIS_OS_NAME == linux ]]; then
-  curl --url="https://github.com/SimonKagstrom/kcov/archive/master.tar.gz" -o ./master.tar.gz 2>/dev/null 3>/dev/null 2>/dev/null || exit 1;
+  curl --header "Dnt: 1" --url "https://github.com/SimonKagstrom/kcov/archive/master.tar.gz" -o ./master.tar.gz 2>/dev/null 3>/dev/null 2>/dev/null || exit 1;
   tar xzf master.tar.gz || exit 2;
   cd kcov-master || exit 2;
   mkdir build || exit 3;
