@@ -77,7 +77,7 @@ purge: clean uninstall
 	$(QUIET)$(ECHO) "$@: Done."
 
 test: cleanup
-	$(QUIET)bash ./tests/test_*sh
+	$(QUIET)echo ./tests/test_*sh | tr -s ' ' '\n' | xargs -L 1 -I{} bash --posix {} 2>/dev/null ;
 	$(QUIET)$(ECHO) "$@: Done."
 
 test-tox: cleanup
