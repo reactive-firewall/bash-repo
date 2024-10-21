@@ -1,107 +1,122 @@
-# About #
-This repo is basically my template for new bash repos/projects
+# Bash Project Template
 
-# CI Template #
+[![Build Status](https://travis-ci.org/reactive-firewall/bash-repo.svg?branch=master)](https://travis-ci.org/reactive-firewall/bash-repo)
+[![Code Coverage](https://codecov.io/gh/reactive-firewall/bash-repo/branch/master/graph/badge.svg)](https://codecov.io/gh/reactive-firewall/bash-repo)
 
-By default this template will assume that the Travis CI Service is used for CI/CD
+A template repository for Bash projects, including CI/CD setup, testing, and code coverage integration.
 
-# Status #
+## Table of Contents
 
-### master ###
-[![status](https://travis-ci.org/reactive-firewall/bash-repo.svg?branch=master)](https://travis-ci.org/reactive-firewall/bash-repo)
-[![code coverage](https://codecov.io/gh/reactive-firewall/bash-repo/branch/master/graph/badge.svg)](https://codecov.io/gh/reactive-firewall/bash-repo/branch/master/)
+- [About](#about)
+- [Status](#status)
+- [Usage](#usage)
+- [Installation](#installation)
+- [Development and Testing](#development-and-testing)
+- [Contributing](#contributing)
+- [License](#license)
 
-### Stable ###
-[![status](https://travis-ci.org/reactive-firewall/bash-repo.svg?branch=stable)](https://travis-ci.org/reactive-firewall/bash-repo)
-[![code coverage](https://codecov.io/gh/reactive-firewall/bash-repo/branch/stable/graph/badge.svg)](https://codecov.io/gh/reactive-firewall/bash-repo/branch/stable/)
+## About
 
-# How do I use this to create a new project repo? #
+This repository serves as a template for new Bash projects, providing a starting point with essential configurations for continuous integration, testing, and code coverage.
 
-(assuming new project is already forked on github to `MY-NEW-REPO`)
+## Status
+
+### Master Branch
+
+[![Build Status](https://travis-ci.org/reactive-firewall/bash-repo.svg?branch=master)](https://travis-ci.org/reactive-firewall/bash-repo)
+[![Code Coverage](https://codecov.io/gh/reactive-firewall/bash-repo/branch/master/graph/badge.svg)](https://codecov.io/gh/reactive-firewall/bash-repo/branch/master/)
+
+### Stable Branch
+
+[![Build Status](https://travis-ci.org/reactive-firewall/bash-repo.svg?branch=stable)](https://travis-ci.org/reactive-firewall/bash-repo)
+[![Code Coverage](https://codecov.io/gh/reactive-firewall/bash-repo/branch/stable/graph/badge.svg)](https://codecov.io/gh/reactive-firewall/bash-repo/branch/stable/)
+
+## Usage
+
+To use this template as the basis for your new project, clone your new repository and start development.
+
+### Cloning the Repository
 
 ```bash
-# cd /MY-AWSOME-DEV-PATH
+# Navigate to your development directory
+cd /path/to/your/dev/directory
+
+# Clone your new repository
 git clone https://github.com/reactive-firewall/MY-NEW-REPO.git MY-NEW-REPO
-# cd ./MY-NEW-REPO
+
+# Change into the project directory
+cd MY-NEW-REPO
 ```
 
-# Dev Testing Template #
+### Example Script
 
-In a rush? Then use this:
+An example script `speed_test.bash` is included in the `bin` directory.
+
+#### Running the Script
 
 ```bash
-make clean ; # cleans up from any previous tests hopefully
-make test ; # runs the tests
-make clean ; # cleans up for next test
+bin/speed_test.bash
 ```
 
-# Example Usage Template #
-
-Want to use the Example `speed_test.bash` script then try this:
-
-### Running... ###
-
-```bash
-speed_test.bash
-```
-
-### ...Outputs ###
+#### Sample Output
 
 ```plain
 Local:  4620K
 Server: 1472K
 ```
 
-# Example installing Template #
+## Installation
 
-The following describes how to install the example script:
+To install the example script and other project components:
 
-### Download... ###
+### Download the Repository
 
 ```bash
 cd /tmp
 git clone https://github.com/reactive-firewall/bash-repo.git bash-repo
-cd ./bash-repo
+cd bash-repo
 make clean
 ```
 
-### ...install ###
+### Install
 
-(might need sudo)
-
-```bash
-make install
-```
-
-### ...uninstall ###
-
-uninstall is similar
+You may need superuser permissions for installation.
 
 ```bash
-make uninstall
+sudo make install
 ```
 
-# [![License - MIT](https://img.shields.io/github/license/reactive-firewall/bash-repo.svg?maxAge=2592000)](https://github.com/reactive-firewall/bash-repo/LICENSE.md)
+### Uninstall
 
-## Copyright (c) 2017 Mr. Walls
-### 
-### THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-### IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-### FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-### AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-### LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-### OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-### SOFTWARE.
-###
-### Permission is hereby granted, free of charge, to any person obtaining a copy
-### of this software and associated documentation files (the "Software"), to deal
-### in the Software without restriction, including without limitation the rights
-### to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-### copies of the Software, and to permit persons to whom the Software is
-### furnished to do so, subject to the following conditions:
-###
-### The above copyright notice and this permission notice shall be included in all
-### copies or substantial portions of the Software.
+To uninstall:
 
-## USE AT OWN RISK.
+```bash
+sudo make uninstall
+```
+
+## Development and Testing
+
+For development and running tests, use the provided `Makefile`.
+
+### Running Tests
+
+```bash
+make clean    # Cleans up from any previous tests
+make test     # Runs the tests
+make clean    # Cleans up after tests
+```
+
+## Contributing
+
+Contributions are welcome! Please adhere to the project's coding standards:
+
+- **[CEP-5](https://gist.github.com/reactive-firewall/3d2bd3cf37f87974df6f7bee31a05a89)**: Custom coding standard for Bash scripts.
+- **[CEP-8](https://gist.github.com/reactive-firewall/b7ee98df9e636a51806e62ef9c4ab161)**: Custom coding standard for Python scripts.
+
+Ensure that all scripts use POSIX built-ins (e.g., use `printf` instead of `echo`) and follow the project's style guidelines, such as keeping the shebang line with an extra space (e.g., `#! /bin/bash`).
+
+## License
+
+[![License - MIT](https://img.shields.io/github/license/reactive-firewall/bash-repo.svg?maxAge=2592000)](LICENSE.md)
+
 
